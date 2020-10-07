@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        * {
+        box-sizing: border-box;
+        }
+
+        #canvas {
+            float: left;
+            width: 202px;
+            height: 375px; 
+        }
+
+        #wardrobe{
+            float: left;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        </style>
+        <script>
+            function allowDrop(ev) {
+                ev.preventDefault();
+            }
+            
+            function drag(ev) {
+                ev.dataTransfer.setData("text", ev.target.id);
+            }
+            
+            function drop(ev) {
+                ev.preventDefault();
+                var data = ev.dataTransfer.getData("text");
+                var element = document.getElementById(data);
+                
+                // shift the dress if it is worn
+                var elements = document.getElementById("canvas").getElementsByClassName(element.className);
+                console.log(elements);
+                for (let e of elements){
+                    e.style.position = "static";
+                    if(e.className == "hat"){
+                        document.getElementById("head").appendChild(e);
+                    }
+                    else if(e.className == "dress"){
+                        document.getElementById("body").appendChild(e);
+                    }
+                    else if(e.className == "panth"){
+                        document.getElementById("legs").appendChild(e);
+                    }
+                    else if(e.className == "shoes"){
+                        document.getElementById("feet").appendChild(e);
+                    }
+                }
+              
+                // Place the dress on the doll
+                document.getElementById("canvas").appendChild(element);                
+                if(element.className == "hat"){        
+                    element.style.zIndex = "1";
+                    element.style.position = "absolute";
+                    element.style.top = "5px";
+                    element.style.left = "45px";
+                }
+                else if(element.className == "dress"){
+                    element.style.zIndex = "2";
+                    element.style.position = "absolute";
+                    element.style.top = "125px";
+                    element.style.left = "37px";
+                }
+                else if(element.className == "panth"){
+                    element.style.zIndex = "1";
+                    element.style.position = "absolute";
+                    element.style.top = "227px";
+                    element.style.left = "62px";
+                }
+                else if(element.className == "shoes"){
+                    element.style.zIndex = "1";
+                    element.style.position = "absolute";
+                    element.style.top = "300px";
+                    element.style.left = "60px";
+                }
+            }
+
+            // if a drees on the doll dragged back to wardrobe
+            function drop2(ev) {
+                ev.preventDefault();
+                var data = ev.dataTransfer.getData("text");
+
+                var e = document.getElementById(data);
+
+                e.style.position = "static";
+                if(e.className == "hat"){
+                    document.getElementById("head").appendChild(e);
+                }
+                else if(e.className == "dress"){
+                    document.getElementById("body").appendChild(e);
+                }
+                else if(e.className == "panth"){
+                    document.getElementById("legs").appendChild(e);
+                }
+                else if(e.className == "shoes"){
+                    document.getElementById("feet").appendChild(e);
+                }
+            }
+        </script>
+    </head>
+    <body>
+
+        <div class="row">
+            <div class="column"></div>
+            <div id="canvas" class="column" style="background-color:#aaa;" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <img id="doll" src="images/doll.png" draggable="false">
+            </div>
+            <div id="wardrobe" class="column" style="background-color:#ddd;" ondrop="drop2(event)" ondragover="allowDrop(event)">
+                <div id="head" class="row">
+                    <img id="hat1" class="hat" src="images/hat1.png" draggable="true" ondragstart="drag(event)"/>
+                    <img id="hat2" class="hat" src="images/hat2.png" draggable="true" ondragstart="drag(event)"/>
+                    <img id="hat3" class="hat" src="images/hat3.png" draggable="true" ondragstart="drag(event)"/>
+                </div>
+                <div id="body" class="row">
+                    <img id="dress1" class="dress" src="images/dress1.png" draggable="true" ondragstart="drag(event)"/>
+                    <img id="dress2" class="dress" src="images/dress2.png" draggable="true" ondragstart="drag(event)"/>
+                    <img id="dress3" class="dress" src="images/dress3.png" draggable="true" ondragstart="drag(event)"/>
+                </div>
+                <div id="legs" class="row">
+                    <img id="panth1" class="panth" src="images/panth1.png" draggable="true" ondragstart="drag(event)"/>
+                </div>
+                <div id="feet" class="row">
+                    <img id="shoes1" class="shoes" src="images/shoes1.png" draggable="true" ondragstart="drag(event)"/>
+                    <img id="shoes2" class="shoes" src="images/shoes2.png" draggable="true" ondragstart="drag(event)"/>
+                    <img id="shoes3" class="shoes" src="images/shoes3.png" draggable="true" ondragstart="drag(event)"/>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
+
+
